@@ -1,0 +1,14 @@
+*.swp
+/.bundle/
+/.yardoc
+/Gemfile.lock
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/tmp/
+/*.gem
+/compiled-gem
+/tests
