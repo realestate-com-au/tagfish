@@ -3,23 +3,30 @@ require 'tagfish/tags'
 
 module Tagfish
   class TagsLogic
-    def self.find_tags_by_repository(docker_api, tags_only=false)
+    
+    attr_reader :docker_api
+    
+    def initialize(docker_api)
+      @docker_api = docker_api
+    end
+    
+    def find_tags_by_repository(tags_only=false)
       if docker_api.api_version == 'v2'
-        tags_list = tags_v2(docker_api, tags_only)
+        tags_list = tags_v2(tags_only)
       else
-        tags_list = tags_v1(docker_api)
+        tags_list = tags_v1
       end
       Tagfish::Tags.new(tags_list)
     end
 
     private
 
-    def self.tags_v1(docker_api)
+    def tags_v1
       tags_json = docker_api.tags_v1
       tags_v1_api(tags_json)
     end
 
-    def self.tags_v1_api(api_response_data)
+    def tags_v1_api(api_response_data)
       case api_response_data
       when Hash
         api_response_data
@@ -32,7 +39,7 @@ module Tagfish
       end
     end
 
-    def self.tags_v2(docker_api, tags_only)
+    def tags_v2(tags_only)
       tags = docker_api.tags_v2["tags"]
       if tags.nil?
         abort("No Tags found for this repository")

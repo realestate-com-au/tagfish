@@ -12,7 +12,7 @@ module Tagfish
       
       docker_uri = DockerURI.parse(repository)
       docker_api = DockerAPI.new(docker_uri)
-      tags = TagsLogic.find_tags_by_repository(docker_api, tags_only)
+      tags = TagsLogic.new(docker_api).find_tags_by_repository(tags_only)
 
       begin
        tags_found = latest? ? tags.latest_tag : tags.tag_names
