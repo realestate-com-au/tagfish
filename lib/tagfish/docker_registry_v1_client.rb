@@ -11,12 +11,16 @@ module Tagfish
       APICall.new(search_uri(keyword)).get_json(http_auth)
     end
     
-    private
+    def tag_names
+      tag_map.tag_names
+    end
 
-    def find_tags_by_repository(tags_only=false)
+    def tag_map
       tags_list = tags_api(tags)
       Tagfish::Tags.new(tags_list)
     end
+    
+    private
 
     def tags
       APICall.new(tags_uri).get_json(http_auth)

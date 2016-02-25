@@ -10,6 +10,14 @@ module Tagfish
     def catalog
       APICall.new(catalog_uri).get_json(http_auth)
     end
+    
+    def tag_names
+      tags["tags"]
+    end
+
+    def tag_map
+      Tagfish::Tags.new(tags_logic)
+    end
 
     private
     
@@ -21,23 +29,13 @@ module Tagfish
       APICall.new(hash_uri(tag)).get_json(http_auth)
     end
     
-    def find_tags_by_repository(tags_only=false)
-      tags_list = tags_logic(tags_only)
-      Tagfish::Tags.new(tags_list)
-    end
-    
-    def tags_logic(tags_only)
-      tag_names = tags["tags"]
+    def tags_logic
       if tag_names.nil?
         abort("No Tags found for this repository")
       end
       
       tags_with_hashes = tag_names.inject({}) do |dict, tag|
-        if tags_only
-          dict[tag] = "dummy_hash"
-        else
-          dict[tag] = hash(tag)["fsLayers"][0]["blobSum"]
-        end
+        dict[tag] = hash(tag)["fsLayers"][0]["blobSum"]
         dict
       end
     end
