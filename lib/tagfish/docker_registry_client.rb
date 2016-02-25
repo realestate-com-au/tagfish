@@ -5,7 +5,7 @@ require 'tagfish/api_call'
 require 'tagfish/tags'
 
 module Tagfish
-  class DockerAPI
+  class DockerRegistryClient
 
     attr_accessor :docker_uri
     attr_accessor :api_version
