@@ -8,23 +8,21 @@ module Tagfish
     option ["-s", "--short"], :flag, "only return tag, not full image path"
 
     def execute
-      tags_only = latest? ? false : true
       
       docker_uri = DockerURI.parse(repository)
       docker_api = DockerRegistryClient.for(docker_uri)
-      tags = docker_api.find_tags_by_repository(tags_only)
-
-      begin
-       tags_found = latest? ? tags.latest_tag : tags.tag_names
-      rescue Exception => e
-        puts e.message
-        return
-      end
-
-      if tags_found.size == 0
-        puts "ERROR: No image explicitly tagged in this Repository, " +
-                "only `latest` tag available."
-        return
+      
+      if latest?
+        tags = docker_api.find_tags_by_repository(false)
+        latest_tag = tags.latest_tag
+        if latest_tag.nil?
+          signal_error "No image explicitly tagged in this Repository, " +
+                  "only `latest` tag available."
+        end
+        tags_found = [latest_tag]
+      else
+        tags = docker_api.find_tags_by_repository(true)
+        tags_found = tags.tag_names
       end
 
       pretty_tags = tags_found.map do |tag_name|
