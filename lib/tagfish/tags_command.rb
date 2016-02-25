@@ -11,7 +11,7 @@ module Tagfish
       tags_only = latest? ? false : true
       
       docker_uri = DockerURI.parse(repository)
-      docker_api = DockerRegistryClient.new(docker_uri)
+      docker_api = DockerRegistryClient.for(docker_uri)
       tags = docker_api.find_tags_by_repository(tags_only)
 
       begin

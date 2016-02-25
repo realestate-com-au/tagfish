@@ -38,7 +38,7 @@ module Tagfish
       end
 
       def update_uri(docker_uri)
-        docker_api = DockerRegistryClient.new(docker_uri)
+        docker_api = DockerRegistryClient.for(docker_uri)
         tags = docker_api.find_tags_by_repository
         newest_tag_name = tags.latest_tag_to_s
         if newest_tag_name.nil?
