@@ -7,21 +7,21 @@ module Tagfish
       'v1'
     end
     
-    def find_tags_by_repository(tags_only=false)
-      tags_list = tags_api(tags)
-      Tagfish::Tags.new(tags_list)
-    end
-    
-    def tags
-      APICall.new(tags_uri).get_json(http_auth)
-    end
-    
     def search(keyword)
       APICall.new(search_uri(keyword)).get_json(http_auth)
     end
     
     private
-    
+
+    def find_tags_by_repository(tags_only=false)
+      tags_list = tags_api(tags)
+      Tagfish::Tags.new(tags_list)
+    end
+
+    def tags
+      APICall.new(tags_uri).get_json(http_auth)
+    end
+        
     def tags_api(api_response_data)
       case api_response_data
         when Hash

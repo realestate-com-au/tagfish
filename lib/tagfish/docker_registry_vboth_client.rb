@@ -27,5 +27,14 @@ module Tagfish
     def base_uri
       "#{docker_uri.protocol}#{docker_uri.registry}"
     end
+
+    def tag_names
+      find_tags_by_repository(true).tag_names
+    end
+
+    def tag_map
+      find_tags_by_repository(false)
+    end
+    
   end
 end

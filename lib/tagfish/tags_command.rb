@@ -13,7 +13,7 @@ module Tagfish
       docker_api = DockerRegistryClient.for(docker_uri)
       
       if latest?
-        tags = docker_api.find_tags_by_repository(false)
+        tags = docker_api.tag_map
         latest_tag = tags.latest_tag
         if latest_tag.nil?
           signal_error "No image explicitly tagged in this Repository, " +
@@ -21,8 +21,7 @@ module Tagfish
         end
         tags_found = [latest_tag]
       else
-        tags = docker_api.find_tags_by_repository(true)
-        tags_found = tags.tag_names
+        tags_found = docker_api.tag_names
       end
 
       pretty_tags = tags_found.map do |tag_name|
