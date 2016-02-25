@@ -7,10 +7,11 @@ module Tagfish
       'v2'
     end
     
-    def find_tags_by_repository(tags_only=false)
-      tags_list = tags_logic(tags_only)
-      Tagfish::Tags.new(tags_list)
+    def catalog
+      APICall.new(catalog_uri).get_json(http_auth)
     end
+
+    private
     
     def tags
       APICall.new(tags_uri).get_json(http_auth)
@@ -20,11 +21,10 @@ module Tagfish
       APICall.new(hash_uri(tag)).get_json(http_auth)
     end
     
-    def catalog
-      APICall.new(catalog_uri).get_json(http_auth)
+    def find_tags_by_repository(tags_only=false)
+      tags_list = tags_logic(tags_only)
+      Tagfish::Tags.new(tags_list)
     end
-
-    private
     
     def tags_logic(tags_only)
       tag_names = tags["tags"]
