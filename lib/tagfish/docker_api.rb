@@ -2,6 +2,7 @@ require 'net/http'
 require 'json'
 require 'tagfish/docker_uri'
 require 'tagfish/api_call'
+require 'tagfish/tags'
 
 module Tagfish
   class DockerAPI
@@ -49,6 +50,15 @@ module Tagfish
       end
     end
     
+    def find_tags_by_repository(tags_only=false)
+      if api_version == 'v2'
+        tags_list = tags_v2_logic(tags_only)
+      else
+        tags_list = tags_v1_logic
+      end
+      Tagfish::Tags.new(tags_list)
+    end
+    
     def tags_v1
       APICall.new(tags_v1_uri).get_json(http_auth)
     end
@@ -67,6 +77,42 @@ module Tagfish
     
     def search_v1(keyword)
       APICall.new(search_v1_uri(keyword)).get_json(http_auth)
+    end
+    
+    private
+    
+    def tags_v1_logic
+      tags_json = tags_v1
+      tags_v1_api(tags_json)
+    end
+
+    def tags_v1_api(api_response_data)
+      case api_response_data
+      when Hash
+        api_response_data
+      when Array
+        api_response_data.reduce({}) do |images, tag|
+          images.merge({tag["name"] => tag["layer"]})
+        end
+      else
+        raise "unexpected type #{api_response_data.class}"
+      end
+    end
+
+    def tags_v2_logic(tags_only)
+      tags = tags_v2["tags"]
+      if tags.nil?
+        abort("No Tags found for this repository")
+      end
+      
+      tags_with_hashes = tags.inject({}) do |dict, tag|
+        if tags_only
+          dict[tag] = "dummy_hash"
+        else
+          dict[tag] = hash_v2(tag)["fsLayers"][0]["blobSum"]
+        end
+        dict
+      end
     end
     
     def base_uri

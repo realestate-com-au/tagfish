@@ -1,5 +1,5 @@
-require "tagfish/tags_logic"
 require "tagfish/docker_uri"
+require "tagfish/docker_api"
 
 module Tagfish
   class TagsCommand < Clamp::Command
@@ -12,7 +12,7 @@ module Tagfish
       
       docker_uri = DockerURI.parse(repository)
       docker_api = DockerAPI.new(docker_uri)
-      tags = TagsLogic.new(docker_api).find_tags_by_repository(tags_only)
+      tags = docker_api.find_tags_by_repository(tags_only)
 
       begin
        tags_found = latest? ? tags.latest_tag : tags.tag_names
