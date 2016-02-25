@@ -8,45 +8,19 @@ module Tagfish
   class DockerRegistryVbothClient
 
     attr_accessor :docker_uri
-    attr_accessor :api_version
     attr_accessor :http_auth
 
     def initialize(docker_uri)
       @docker_uri = docker_uri
-      retrieve_api_version_and_auth()
-    end
-    
-    def retrieve_api_version_and_auth
-      code = try_api('v1')
-      if code != 200 
-        code = try_api('v2')
+      code = APICall.new(ping_uri).response_code
+      if code == 401
+        @http_auth = DockerHttpAuth.new(docker_uri.registry)
+        code = APICall.new(ping_uri).response_code(http_auth)
       end
       if code == 401
-        abort("Authentication failed, please `docker login <REGISTRY>` and try again.")
+        raise DockerRegistryClient::AuthenticationError, "Please `docker login <REGISTRY>` and try again"
       elsif code != 200
-        abort("API version not recognized")
-      end
-    end
-    
-    def try_api(version)
-      code = APICall.new(ping_uri(version)).response_code
-      if code == 200
-        @api_version = version
-      elsif code == 401
-        code = init_auth(version)
-        if code == 200
-          @api_version = version
-        end
-      end
-      return code
-    end
-    
-    def init_auth(api_version)
-      @http_auth = DockerHttpAuth.new(docker_uri.registry)
-      if api_version == 'v2'
-        code = APICall.new(ping_v2_uri).response_code(http_auth)
-      elsif api_version == 'v1'
-        code = APICall.new(ping_v1_uri).response_code(http_auth)
+        raise DockerRegistryClient::APIVersionError, "Not recognized"
       end
     end
     
@@ -119,10 +93,10 @@ module Tagfish
       "#{docker_uri.protocol}#{docker_uri.registry}"
     end
     
-    def ping_uri(version)
-      if version == 'v1'
+    def ping_uri
+      if api_version == 'v1'
         ping_v1_uri
-      elsif version == 'v2'
+      elsif api_version == 'v2'
         ping_v2_uri
       end
     end
