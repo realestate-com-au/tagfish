@@ -1,5 +1,4 @@
 require 'tagfish/docker_http_auth'
-require 'tagfish/docker_api'
 
 module Tagfish
   class DockerURI

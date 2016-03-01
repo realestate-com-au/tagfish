@@ -1,5 +1,5 @@
-require "tagfish/tags_logic"
 require "tagfish/docker_uri"
+require "tagfish/docker_registry_client"
 
 module Tagfish
   class TagsCommand < Clamp::Command
@@ -8,23 +8,20 @@ module Tagfish
     option ["-s", "--short"], :flag, "only return tag, not full image path"
 
     def execute
-      tags_only = latest? ? false : true
       
       docker_uri = DockerURI.parse(repository)
-      docker_api = DockerAPI.new(docker_uri)
-      tags = TagsLogic.find_tags_by_repository(docker_api, tags_only)
-
-      begin
-       tags_found = latest? ? tags.latest_tag : tags.tag_names
-      rescue Exception => e
-        puts e.message
-        return
-      end
-
-      if tags_found.size == 0
-        puts "ERROR: No image explicitly tagged in this Repository, " +
-                "only `latest` tag available."
-        return
+      docker_api = DockerRegistryClient.for(docker_uri)
+      
+      if latest?
+        tags = docker_api.tag_map
+        latest_tag = tags.latest_tag
+        if latest_tag.nil?
+          signal_error "No image explicitly tagged in this Repository, " +
+                  "only `latest` tag available."
+        end
+        tags_found = [latest_tag]
+      else
+        tags_found = docker_api.tag_names
       end
 
       pretty_tags = tags_found.map do |tag_name|

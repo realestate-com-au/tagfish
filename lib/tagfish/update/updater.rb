@@ -1,6 +1,6 @@
 require 'tagfish/tokeniser'
 require 'tagfish/docker_uri'
-require 'tagfish/tags_logic'
+require 'tagfish/docker_registry_client'
 
 module Tagfish
   module Update
@@ -38,9 +38,9 @@ module Tagfish
       end
 
       def update_uri(docker_uri)
-        docker_api = DockerAPI.new(docker_uri)
-        tags = TagsLogic.find_tags_by_repository(docker_api)
-        newest_tag_name = tags.latest_tag_to_s
+        docker_api = DockerRegistryClient.for(docker_uri)
+        tags = docker_api.tag_map
+        newest_tag_name = tags.latest_tag
         if newest_tag_name.nil?
           docker_uri
         else

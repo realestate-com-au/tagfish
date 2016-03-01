@@ -4,22 +4,20 @@ require 'json'
 module Tagfish
   class Tags
 
-    def initialize(tags)
-      @tags = tags
+    attr_reader :tag_map 
+    
+    def initialize(tag_map)
+      @tag_map = tag_map
     end
 
     def tag_names
-      @tags.keys.sort
+      tag_map.keys.sort
     end
 
     def latest_tag
-      tag_names.select do |tag_name|
-        (@tags[tag_name] == @tags["latest"]) && (tag_name != 'latest')
+      tag_names.detect do |tag_name|
+        (tag_map[tag_name] == tag_map["latest"]) && (tag_name != "latest")
       end
-    end
-
-    def latest_tag_to_s
-      latest_tag.empty? ? nil : latest_tag[0]
     end
 
   end
