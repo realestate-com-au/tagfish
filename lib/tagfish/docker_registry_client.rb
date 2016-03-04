@@ -5,7 +5,7 @@ module Tagfish
   module DockerRegistryClient
 
     def self.for(*args)
-      [DockerRegistryV2Client, DockerRegistryV1Client].each do |client_class|
+      [DockerRegistryV1Client, DockerRegistryV2Client].each do |client_class|
         begin 
           return client_class.new(*args)
         rescue APIVersionError
