@@ -9,7 +9,6 @@ Features include:
 - List all the tags of a given Docker repository
 - Return the most recent explicit tag of a repository
 - Update a file with the newest tags
-- Search for a repository
 - Authenticate by reading native Docker config file 
 - Works against hub.docker.com and private registries
 - Supports Docker Registry/Distribution API v1 and v2 
@@ -23,8 +22,6 @@ To use Tagfish against a registry requiring authentication, you first need to au
 - [Usage](#usage)
   - [`tagfish tags`](#tagfish-tags)
     - [Example](#example)
-  - [`tagfish search`](#tagfish-search)
-    - [Example](#example-1)
   - [`tagfish update`](#tagfish-update)
     - [Example](#example-2)
     - [Official repositories](#official-repositories)
@@ -68,33 +65,6 @@ alpine:3.1
 alpine:3.2
 alpine:edge
 alpine:latest
-```
-
-### `tagfish search`
-The `search` command is used to search for a repository in a given registry.
-
-    Usage:
-        tagfish search [OPTIONS] [KEYWORD]
-
-    Parameters:
-        [KEYWORD]                     object to search
-
-    Options:
-        -r, --registry REGISTRY       Docker registry (default: "index.docker.io")
-        -h, --help                    print help
-
-Note: `search` will not work if the search API is disabled on the registry side. 
-
-#### Example
-```
-$ tagfish search alpine
-alpine
-1science/alpine
-webhippie/alpine
-anapsix/alpine-java
-colstrom/alpine
-appelgriebsch/alpine
-[...]
 ```
 
 ### `tagfish update`
@@ -148,7 +118,8 @@ Tagfish is released as a Docker image as well, and can be run with:
 docker run --rm \
   -v ~/.docker:/root/.docker:ro \
   -v ${PWD}:/cwd \
-  cowbell/tagfish
+  cowbell/tagfish \
+  <COMMAND>
 ```
 
 ## Contributing
