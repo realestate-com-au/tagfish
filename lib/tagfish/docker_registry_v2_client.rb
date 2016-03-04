@@ -7,8 +7,12 @@ module Tagfish
       'v2'
     end
     
-    def catalog
-      APICall.new(catalog_uri).get_json(http_auth)
+    def search(keyword)
+      repo_list = catalog
+      if keyword
+        repo_list.select! {|repo| repo.include? keyword}
+      end
+      repo_list.map {|repo| "#{docker_uri.registry}/#{repo}"} 
     end
     
     def tag_names
@@ -20,6 +24,10 @@ module Tagfish
     end
 
     private
+    
+    def catalog
+      APICall.new(catalog_uri).get_json(http_auth)["repositories"]
+    end
     
     def tags
       APICall.new(tags_uri).get_json(http_auth)

@@ -8,7 +8,11 @@ module Tagfish
     end
     
     def search(keyword)
-      APICall.new(search_uri(keyword)).get_json(http_auth)
+      if not keyword
+        abort("You need to specify a keyword to search a Registry V1")
+      end
+      repos_raw = APICall.new(search_uri(keyword)).get_json(http_auth)
+      repos = repos_raw["results"].map {|result| result["name"]}
     end
     
     def tag_names
