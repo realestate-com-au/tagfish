@@ -7,14 +7,6 @@ module Tagfish
       'v2'
     end
     
-    def search(keyword)
-      repo_list = catalog["repositories"]
-      if keyword
-        repo_list.select! {|repo| repo.include? keyword}
-      end
-      repo_list.map {|repo| "#{docker_uri.registry}/#{repo}"} 
-    end
-    
     def tag_names
       tags["tags"]
     end
@@ -24,10 +16,6 @@ module Tagfish
     end
 
     private
-    
-    def catalog
-      api_call.get(catalog_uri).json
-    end
     
     def tags
       api_call.get(tags_uri).json
@@ -52,10 +40,6 @@ module Tagfish
       "#{base_uri}/v2/"
     end
 
-    def catalog_uri
-      "#{base_uri}/v2/_catalog"
-    end
-    
     def tags_uri
       "#{base_uri}/v2/#{docker_uri.repository}/tags/list"  
     end

@@ -5,8 +5,7 @@ $LOAD_PATH << File.expand_path("../../lib", __FILE__)
 require 'clamp'
 require 'tagfish/tags_command'
 require 'tagfish/update/update_command'
-require 'tagfish/search_command'
-require "tagfish/version"
+require 'tagfish/version'
 
 module Tagfish
   class MainCommand < Clamp::Command
@@ -22,10 +21,6 @@ module Tagfish
 
   class MainCommand < Clamp::Command
     subcommand "update", "inspect files for outdated dependencies", Update::UpdateCommand
-  end
-  
-  class MainCommand < Clamp::Command
-    subcommand "search", "search a registry for repositories", SearchCommand
   end
   
   MainCommand.run
