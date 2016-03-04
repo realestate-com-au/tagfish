@@ -7,14 +7,6 @@ module Tagfish
       'v1'
     end
     
-    def search(keyword)
-      if not keyword
-        abort("You need to specify a keyword to search a Registry V1")
-      end
-      repos_raw = APICall.new(search_uri(keyword)).get_json(http_auth)
-      repos = repos_raw["results"].map {|result| result["name"]}
-    end
-    
     def tag_names
       tag_map.tag_names
     end
@@ -27,7 +19,7 @@ module Tagfish
     private
 
     def tags
-      APICall.new(tags_uri).get_json(http_auth)
+      api_call.get(tags_uri).json
     end
         
     def tags_api(api_response_data)
@@ -45,10 +37,6 @@ module Tagfish
     
     def ping_uri
       "#{base_uri}/v1/_ping"
-    end
-    
-    def search_uri(keyword)
-      "#{base_uri}/v1/search?q=#{keyword}"  
     end
     
     def tags_uri

@@ -1,19 +1,33 @@
+require 'tagfish/docker_http_auth'
+
 module Tagfish
   class APICall
     attr_accessor :uri
     attr_accessor :http
     attr_accessor :request
-  
-    def initialize(uri_string) 
+    attr_accessor :http_auth
+    
+    def initialize
+      @auth = nil
+    end
+    
+    def get(uri_string)
       @uri = URI.parse(uri_string)
       @http = Net::HTTP.new(uri.host, uri.port)
       @http.use_ssl = true if uri.port == 443
       @request = Net::HTTP::Get.new(uri.request_uri)
+      if http_auth
+        @request.basic_auth(http_auth.username, http_auth.password)
+      end
+      self
     end
-        
-    def get_json(http_auth=nil)
+    
+    def auth(registry)
+      @http_auth = DockerHttpAuth.new(registry)
+    end
+    
+    def json
       begin
-        auth(http_auth) if http_auth
         response = http.request(request)
         if response.code == "200"
           return JSON.parse(response.body)
@@ -25,8 +39,7 @@ module Tagfish
       end
     end
 
-    def response_code(http_auth=nil)
-      auth(http_auth) if http_auth
+    def response_code
       begin
         http.request(request).code.to_i
       rescue SocketError
@@ -34,8 +47,5 @@ module Tagfish
       end
     end
 
-    def auth(http_auth)
-      @request.basic_auth(http_auth.username, http_auth.password)
-    end
   end
 end
