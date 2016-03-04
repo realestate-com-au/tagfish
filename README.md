@@ -146,7 +146,7 @@ Tagfish is released as a Docker image as well, and can be run with:
 
 ```
 docker run --rm \
-  -v ~/.docker/config.json:/root/.docker/config.json:ro \
+  -v ~/.docker:/root/.docker:ro \
   -v ${PWD}:/cwd \
   cowbell/tagfish
 ```
