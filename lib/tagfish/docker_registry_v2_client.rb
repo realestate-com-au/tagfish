@@ -35,7 +35,7 @@ module Tagfish
       end
       
       tags_with_hashes = tag_names.inject({}) do |dict, tag|
-        dict[tag] = hash(tag)["fsLayers"][0]["blobSum"]
+        dict[tag] = hash(tag)["fsLayers"]
         dict
       end
     end
