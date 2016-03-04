@@ -11,7 +11,7 @@ module Tagfish
       if not keyword
         abort("You need to specify a keyword to search a Registry V1")
       end
-      repos_raw = APICall.new(search_uri(keyword)).get_json(http_auth)
+      repos_raw = api_call.get(search_uri(keyword)).json
       repos = repos_raw["results"].map {|result| result["name"]}
     end
     
@@ -27,7 +27,7 @@ module Tagfish
     private
 
     def tags
-      APICall.new(tags_uri).get_json(http_auth)
+      api_call.get(tags_uri).json
     end
         
     def tags_api(api_response_data)

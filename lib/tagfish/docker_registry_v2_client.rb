@@ -8,7 +8,7 @@ module Tagfish
     end
     
     def search(keyword)
-      repo_list = catalog
+      repo_list = catalog["repositories"]
       if keyword
         repo_list.select! {|repo| repo.include? keyword}
       end
@@ -26,15 +26,15 @@ module Tagfish
     private
     
     def catalog
-      APICall.new(catalog_uri).get_json(http_auth)["repositories"]
+      api_call.get(catalog_uri).json
     end
     
     def tags
-      APICall.new(tags_uri).get_json(http_auth)
+      api_call.get(tags_uri).json
     end
     
     def hash(tag)
-      APICall.new(hash_uri(tag)).get_json(http_auth)
+      api_call.get(hash_uri(tag)).json
     end
     
     def tags_logic
