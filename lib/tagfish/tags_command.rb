@@ -14,12 +14,12 @@ module Tagfish
       
       if latest?
         tags = docker_api.tag_map
-        latest_tag = tags.latest_tag
-        if latest_tag.nil?
+        latest_tags = tags.latest_tags
+        if latest_tags.empty?
           signal_error "No image explicitly tagged in this Repository, " +
                   "only `latest` tag available."
         end
-        tags_found = [latest_tag]
+        tags_found = latest_tags
       else
         tags_found = docker_api.tag_names
       end

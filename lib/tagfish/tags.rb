@@ -14,8 +14,8 @@ module Tagfish
       tag_map.keys.sort
     end
 
-    def latest_tag
-      tag_names.detect do |tag_name|
+    def latest_tags
+      tag_names.select do |tag_name|
         (tag_map[tag_name] == tag_map["latest"]) && (tag_name != "latest")
       end
     end
