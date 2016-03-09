@@ -1,6 +1,6 @@
 # Tagfish 
 
-![Tagfish logo](logo.jpg)
+![Tagfish logo](logo.png)
 
 Tagfish is a CLI tool to interact with Docker registries. 
 
