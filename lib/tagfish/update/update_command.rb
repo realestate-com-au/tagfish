@@ -6,7 +6,7 @@ require 'tagfish/tokeniser'
 module Tagfish
   module Update
     class UpdateCommand < Clamp::Command
-      parameter "FILE", "file to update"
+      parameter "[FILE]", "file to update", :default => "Dockerfile"
       option ["-d", "--dry-run"], :flag, "enable dry run"
       option "--only", "PATTERN", "Only update repositories matching pattern. Wildcards (*) may be used."
 
