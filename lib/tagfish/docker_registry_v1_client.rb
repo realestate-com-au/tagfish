@@ -24,12 +24,12 @@ module Tagfish
         
     def tags_api(api_response_data)
       case api_response_data
-        when Hash
+      when Hash
         api_response_data
       when Array
         api_response_data.reduce({}) do |images, tag|
           images.merge({tag["name"] => tag["layer"]})
-        end
+      end
       else
         raise "unexpected type #{api_response_data.class}"
       end

@@ -46,6 +46,14 @@ module Tagfish
         abort("Call to the registry API failed, the following resource might not exist:\n#{uri.to_s}")
       end
     end
-
+    
+    def digest
+      begin
+        response = http.request(request)
+        return response.fetch("Docker-Content-Digest")
+      rescue SocketError
+        puts "ERROR: SocketError"
+      end
+    end
   end
 end
