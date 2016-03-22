@@ -8,17 +8,17 @@ module Tagfish
     end
     
     def tag_names
-      tag_map.tag_names
+      tags.tag_names
     end
 
-    def tag_map
-      tags_list = tags_api(tags)
+    def tags
+      tags_list = tags_api(tags_json)
       Tagfish::Tags.new(tags_list)
     end
     
     private
 
-    def tags
+    def tags_json
       api_call.get(tags_uri).json
     end
         

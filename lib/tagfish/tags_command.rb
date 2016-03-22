@@ -14,7 +14,7 @@ module Tagfish
       docker_api = DockerRegistryClient.for(docker_uri)
       
       if latest?
-        tags = docker_api.tag_map
+        tags = docker_api.tags
         latest_tags = tags.latest_tags
         if latest_tags.empty?
           signal_error "No image explicitly tagged in this Repository, " +

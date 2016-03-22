@@ -8,16 +8,16 @@ module Tagfish
     end
     
     def tag_names
-      tags["tags"]
+      tags_json["tags"]
     end
 
-    def tag_map
-      Tagfish::Tags.new(tags_logic)
+    def tags
+      Tagfish::Tags.new(tags_list)
     end
 
     private
     
-    def tags
+    def tags_json
       api_call.get(tags_uri).json
     end
     
@@ -25,7 +25,7 @@ module Tagfish
       api_call.get(hash_uri(tag)).digest
     end
     
-    def tags_logic
+    def tags_list
       if tag_names.nil?
         abort("No Tags found for this repository")
       end
