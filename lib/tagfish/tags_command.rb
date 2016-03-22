@@ -24,9 +24,11 @@ module Tagfish
         
         if digest?
           tags_found = tags_found.map do |tag_name|
-            tag_name + '@' + tags.tag_map[tag_name]
+            digest = tags.tag_map[tag_name]
+            digest.include?("sha256:") ? tag_name + '@' + digest : tag_name
           end
         end
+        
       else
         tags_found = docker_api.tag_names
       end
