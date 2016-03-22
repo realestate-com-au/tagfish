@@ -13,7 +13,7 @@ module Tagfish
        begin
          config = File.open(File.expand_path(file_path), 'r')
        rescue Exception => e
-         abort("Tried to get a SLiP but the file #{file_path} does not exist")
+         abort("Tried to get username/password but the file #{file_path} does not exist")
        end
 
        json_config = JSON.parse(config.read())
