@@ -50,11 +50,19 @@ The `tags` subcommands is used to retrieve tags from a given repository:
     Options:
         -l, --latest                  only return latest explicitly tagged image
         -s, --short                   only return tag, not full image path
+        -d, --digest                  returns the tag's digest (v2 API only)
         -h, --help                    print help
 
 Where `repository` is a docker repository path, including the docker registry. The tags are returned in alphabetical order.
 
 The `--latest` option gets the image ID of the docker image tagged `latest` in the repository, finds a matching image with a tag set manually (e.g: date, version number), and returns that tag. This option will not work if there is no image tagged `latest` in your repository.
+
+EXPERIMENTAL: The `--digest` option returns the tag with its hash. It only works in conjunction
+ with the `--latest` option and against a registry running the v2 API. As of today it doesn't work against Docker Hub, because we're accessing it over API v1 to avoid the authentication mecanism. It returns a string such as:
+ ```
+ my-registry/cowbell/tagfish:1.1.3@sha256:491c87df7d5f...
+ ```
+This is used to lock down not only to a specific tag version, but to a specific image hash. So even if the tag is reassigned later, this will still point to the same image.
 
 #### Example
 ```

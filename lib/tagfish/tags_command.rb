@@ -6,7 +6,7 @@ module Tagfish
     parameter "REPOSITORY", "docker repository"
     option ["-l", "--latest"], :flag, "only return latest explicitly tagged image"
     option ["-s", "--short"], :flag, "only return tag, not full image path"
-    option ["-d", "--digest"], :flag, "returns the tag's digest (hash)"
+    option ["-d", "--digest"], :flag, "returns the tag's digest (v2 API only)"
 
     def execute
       
