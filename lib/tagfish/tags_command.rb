@@ -6,7 +6,6 @@ module Tagfish
     parameter "REPOSITORY", "docker repository"
     option ["-l", "--latest"], :flag, "only return latest explicitly tagged image"
     option ["-s", "--short"], :flag, "only return tag, not full image path"
-    option ["-d", "--digest"], :flag, "returns the tag's digest (v2 API only)"
 
     def execute
       
@@ -21,13 +20,6 @@ module Tagfish
                   "only `latest` tag available."
         end
         tags_found = latest_tags
-        
-        if digest?
-          tags_found = tags_found.map do |tag_name|
-            digest = tags.tag_map[tag_name]
-            digest.include?("sha256:") ? tag_name + '@' + digest : tag_name
-          end
-        end
         
       else
         tags_found = docker_api.tag_names

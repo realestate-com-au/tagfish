@@ -21,8 +21,8 @@ module Tagfish
       api_call.get(tags_uri).json
     end
     
-    def digest(tag)
-      api_call.get(hash_uri(tag)).digest
+    def hash(tag)
+      api_call.get(hash_uri(tag)).json
     end
     
     def tags_list
@@ -31,7 +31,7 @@ module Tagfish
       end
       
       tags_with_hashes = tag_names.inject({}) do |dict, tag|
-        dict[tag] = digest(tag)
+        dict[tag] = hash(tag)["fsLayers"]
         dict
       end
     end
