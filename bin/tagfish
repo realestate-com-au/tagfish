@@ -7,21 +7,15 @@ require 'tagfish/tags_command'
 require 'tagfish/update/update_command'
 require 'tagfish/version'
 
-module Tagfish
-  class MainCommand < Clamp::Command
-    option ["-v", "--version"], :flag, "display version" do
-        puts "tagfish-#{Tagfish::VERSION}"
-        exit 0
-    end
+Clamp do
+
+  option ["-v", "--version"], :flag, "display version" do
+      puts "tagfish-#{Tagfish::VERSION}"
+      exit 0
   end
 
-  class MainCommand < Clamp::Command
-    subcommand "tags", "find tags for a repository", TagsCommand
-  end
+  subcommand "tags", "find tags for a repository", Tagfish::TagsCommand
 
-  class MainCommand < Clamp::Command
-    subcommand "update", "inspect files for outdated dependencies", Update::UpdateCommand
-  end
-  
-  MainCommand.run
+  subcommand "update", "inspect files for outdated dependencies", Tagfish::Update::UpdateCommand
+
 end
