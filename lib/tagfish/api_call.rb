@@ -38,7 +38,7 @@ module Tagfish
     end
 
     def auth(registry)
-      @http_auth = DockerHttpAuth.new(registry)
+      @http_auth = DockerHttpAuth.for_registry(registry)
     end
 
   end
