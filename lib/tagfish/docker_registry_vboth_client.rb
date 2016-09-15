@@ -11,8 +11,8 @@ module Tagfish
     attr_accessor :http_auth
     attr_accessor :api_call
 
-    def initialize(docker_uri)
-      @api_call = APICall.new
+    def initialize(docker_uri, debug)
+      @api_call = APICall.new(debug)
       @docker_uri = docker_uri
       code = api_call.get(ping_uri).response_code
       if code == 401

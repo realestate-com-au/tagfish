@@ -14,7 +14,7 @@ module Tagfish
       def execute
 
         docker_uri = DockerURI.parse(repository)
-        docker_api = DockerRegistryClient.for(docker_uri)
+        docker_api = DockerRegistryClient.for(docker_uri, debug?)
 
         if latest?
           tags = docker_api.tags

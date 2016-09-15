@@ -6,8 +6,10 @@ module Tagfish
     attr_accessor :http
     attr_accessor :request
     attr_accessor :http_auth
+    attr_accessor :debug
     
-    def initialize
+    def initialize (debug = false)
+      @debug = debug
       @auth = nil
     end
     
@@ -15,6 +17,7 @@ module Tagfish
       @uri = URI.parse(uri_string)
       @http = Net::HTTP.new(uri.host, uri.port)
       @http.use_ssl = true if uri.port == 443
+      @http.set_debug_output($stderr) if debug
       @request = Net::HTTP::Get.new(uri.request_uri)
       if http_auth
         @request.basic_auth(http_auth.username, http_auth.password)
