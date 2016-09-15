@@ -14,6 +14,13 @@ task build_docker_image: [:build] do
   puts "Built image #{docker_uri}"
 end
 
+require "rspec/core/rake_task"
+
+desc "Run the specs"
+RSpec::Core::RakeTask.new do |t|
+  t.pattern = "spec/**/*_spec.rb"
+end
+
 desc "Release docker image"
 task release_docker_image: [:build_docker_image] do
   sh "docker push #{docker_uri}:#{tag}"
