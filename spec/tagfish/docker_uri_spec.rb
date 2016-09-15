@@ -4,18 +4,18 @@ require 'tagfish/docker_uri'
 module Tagfish
   describe DockerURI do
     describe '.parse' do
-      subject {DockerURI.parse(docker_string)}
+      subject {DockerURI.parse(input)}
       context 'a docker string' do
-        let(:docker_string) do "#{protocol}#{registry}#{repository}#{tag}" end
+        let(:input) do "#{protocol}#{registry}#{repository}#{tag}" end
         let(:protocol) do nil end
         let(:registry) do nil end
         let(:repository) do "ubuntu" end
         let(:tag) do nil end
 
         context 'with the protocol http' do
-          let(:protocol) do "http://" end
+          let(:input) { "http://some.rego/repo" }
           it 'creates a uri with protocol http' do
-             expect(subject.protocol).to eq "http://"
+            expect(subject.protocol).to eq "http://"
           end
         end
 
@@ -28,8 +28,8 @@ module Tagfish
 
         context 'when protocol is missing' do
           let(:protocol) do nil end
-          it 'creates a uri with no protocol' do
-            expect(subject.protocol).to be nil
+          it 'defaults to https' do
+            expect(subject.protocol).to eq "https://"
           end
         end
 
@@ -42,8 +42,8 @@ module Tagfish
 
         context "without a registry" do
           let(:registry) do nil end
-          it 'creates a uri without a registry' do
-            expect(subject.registry).to be nil
+          it 'defaults to Docker Hub' do
+            expect(subject.registry).to eq("index.docker.io")
           end
         end
 
@@ -75,12 +75,6 @@ module Tagfish
           end
         end
 
-        context "with an absolute uri" do
-          let(:protocol) do "http://" end
-          let(:registry) do "my-super-registry" end
-          let(:repository) do "tagfish/eat-everybody" end
-          let(:tag) do ":intheocean" end
-        end
       end
     end
 
@@ -88,13 +82,13 @@ module Tagfish
       subject { DockerURI.new(nil, nil, nil, tag).tag? }
       context 'when tag is present' do
         let(:tag) {'tag'}
-        it 'returns true' do 
-          is_expected.to eq true 
+        it 'returns true' do
+          is_expected.to eq true
         end
       end
       context 'when tag is missing' do
         let(:tag) {nil}
-        it 'returns false' do 
+        it 'returns false' do
           is_expected.to eq false
         end
       end
@@ -109,7 +103,7 @@ module Tagfish
       end
       context 'when tag is not latest' do
         let(:tag) {'trusty'}
-        it 'returns false' do 
+        it 'returns false' do
           is_expected.to eq false
         end
       end
