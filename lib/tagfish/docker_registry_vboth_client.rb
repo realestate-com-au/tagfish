@@ -8,7 +8,6 @@ module Tagfish
   class DockerRegistryVbothClient
 
     attr_accessor :docker_uri
-    attr_accessor :http_auth
     attr_accessor :api_call
 
     def initialize(docker_uri, debug)
@@ -25,7 +24,7 @@ module Tagfish
         raise DockerRegistryClient::APIVersionError, "Not recognized"
       end
     end
-    
+
     def base_uri
       "#{docker_uri.protocol}#{docker_uri.registry}"
     end

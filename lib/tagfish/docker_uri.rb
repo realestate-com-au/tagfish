@@ -1,7 +1,7 @@
-require 'tagfish/docker_http_auth'
-
 module Tagfish
+
   class DockerURI
+
     URI_PARSER = %r{
       (https?:\/\/)?                # Optional protocol
       (?:([\w.\-]+\.[\w.\-]+)\/)?   # Optional registry
@@ -33,7 +33,7 @@ module Tagfish
         @protocol = "https://"
       end
     end
-    
+
     def repo_and_tag
       tag.nil? ? "#{repository}" : "#{repository}:#{tag}"
     end
@@ -59,5 +59,7 @@ module Tagfish
         "#{registry}#{reg_sep}#{repository}#{tag_sep}#{tag}"
       end
     end
+
   end
+
 end
