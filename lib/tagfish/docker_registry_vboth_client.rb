@@ -13,10 +13,10 @@ module Tagfish
     def initialize(docker_uri, debug)
       @api_call = APICall.new(debug)
       @docker_uri = docker_uri
-      code = api_call.get(ping_uri).response_code
+      code = api_call.get(ping_uri).code
       if code == 401
         api_call.auth(docker_uri.registry)
-        code = api_call.get(ping_uri).response_code
+        code = api_call.get(ping_uri).code
       end
       if code == 401
         raise DockerRegistryClient::AuthenticationError, "Please `docker login <REGISTRY>` and try again"

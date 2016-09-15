@@ -2,11 +2,11 @@ require 'tagfish/docker_registry_vboth_client'
 
 module Tagfish
   class DockerRegistryV1Client < DockerRegistryVbothClient
-    
+
     def api_version
       'v1'
     end
-    
+
     def tag_names
       tags.tag_names
     end
@@ -15,13 +15,13 @@ module Tagfish
       tags_list = tags_api(tags_json)
       Tagfish::Tags.new(tags_list)
     end
-    
+
     private
 
     def tags_json
-      api_call.get(tags_uri).json
+      api_call.get!(tags_uri).json
     end
-        
+
     def tags_api(api_response_data)
       case api_response_data
       when Hash
@@ -34,11 +34,11 @@ module Tagfish
         raise "unexpected type #{api_response_data.class}"
       end
     end
-    
+
     def ping_uri
       "#{base_uri}/v1/_ping"
     end
-    
+
     def tags_uri
       "#{base_uri}/v1/repositories/#{docker_uri.repository}/tags"
     end
