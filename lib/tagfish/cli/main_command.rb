@@ -17,6 +17,14 @@ module Tagfish
 
       subcommand "update", "inspect files for outdated dependencies", UpdateCommand
 
+      def run(*args)
+        super(*args)
+      rescue Tagfish::APIError => e
+        signal_error e.message
+      rescue SocketError => e
+        signal_error e.message
+      end
+
     end
 
   end
