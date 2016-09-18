@@ -1,9 +1,10 @@
 FROM alpine:3.4
 MAINTAINER Clement Labbe <clement.labbe@rea-group.com>
 
-RUN apk add --update ruby \
-    ruby-dev \
-    ruby-io-console \
+RUN apk add --update \
+    ruby=2.3.1-r0 \
+    ruby-dev=2.3.1-r0 \
+    ruby-io-console=2.3.1-r0 \
     diffutils \
     linux-headers \
     build-base \
