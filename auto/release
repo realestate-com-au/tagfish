@@ -1,0 +1,25 @@
+#! /bin/bash -e
+
+cd $(dirname $0)/..
+
+REPOSITORY=cowbell/tagfish
+VERSION=$(cat lib/tagfish/version.rb | grep VERSION | cut -d'"' -f2)
+
+# Ensure we have no local changes
+git diff HEAD --exit-code
+
+# Release the gem
+auto/dev-environment rake build_latest
+auto/dev-environment rake release
+
+# Build the image
+docker build -t ${REPOSITORY}:latest .
+
+# Release to new registry
+docker push ${REPOSITORY}:latest
+docker tag ${REPOSITORY}:latest ${REPOSITORY}:${VERSION}
+docker push ${REPOSITORY}:latest
+
+# Tag Git repo with version
+git tag ${VERSION}
+git push origin ${VERSION}

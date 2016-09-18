@@ -29,6 +29,7 @@ To use Tagfish against a registry requiring authentication, you first need to au
   - [Gem](#gem)
     - [Limitations](#limitations)
   - [Docker image](#docker-image)
+- [Development](#development)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -121,6 +122,27 @@ docker run --rm \
   cowbell/tagfish \
   <COMMAND>
 ```
+## Development
+- Use dev tagfish
+```bash
+$ auto/tagfish
+```
+
+- Run the tests
+```bash
+$ auto/test
+```
+
+- Package gem and Docker image
+```bash
+$ auto/package
+```
+
+- Release gem and Docker image
+```bash
+$ auto/release
+```
+This requires write access to the Git repo, the Gem repo, and the Docker repo.
 
 ## Contributing
 

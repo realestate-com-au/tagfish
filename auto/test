@@ -1,0 +1,3 @@
+#! /bin/bash -e
+
+$(dirname $0)/dev-environment rake spec
