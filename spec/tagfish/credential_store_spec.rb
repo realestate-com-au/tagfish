@@ -37,10 +37,10 @@ describe Tagfish::CredentialStore do
 
     let(:stored_credentials) do
       {
-	"auths" => {
-		"my.registry" => {
-			"auth" => b64_creds("UUU", "PPP")
-		}
+      	"auths" => {
+      		"my.registry" => {
+      			"auth" => b64_creds("UUU", "PPP")
+      		}
         }
       }
     end
