@@ -2,6 +2,7 @@ FROM alpine:3.4
 MAINTAINER Clement Labbe <clement.labbe@rea-group.com>
 
 RUN apk add --update ruby \
+    git \
     ruby-dev \
     ruby-io-console \
     diffutils \
