@@ -10,7 +10,3 @@ git diff HEAD --exit-code
 
 auto/release-gem
 auto/release-docker-image
-
-# Tag Git repo with version
-git tag ${VERSION}
-git push origin ${VERSION}
