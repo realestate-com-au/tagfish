@@ -1,0 +1,7 @@
+#! /bin/bash -e
+
+cd $(dirname $0)/..
+
+# Release the gem
+auto/dev-environment rake build_latest
+auto/dev-environment rake release
