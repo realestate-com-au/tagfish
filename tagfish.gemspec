@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/realestate-com-au/tagfish"
   spec.license       = "MIT"
 
-  spec.files         = Dir.glob("{bin,lib}/**/*")
+  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "bin"
   spec.executables   = ["tagfish"]
   spec.require_paths = ["lib"]
