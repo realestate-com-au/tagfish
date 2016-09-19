@@ -1,5 +1,7 @@
 # Tagfish 
 
+[![Build Status](https://travis-ci.org/realestate-com-au/tagfish.svg?branch=master)](https://travis-ci.org/realestate-com-au/tagfish)
+
 ![Tagfish logo](logo.png)
 
 Tagfish is a CLI tool to interact with Docker registries. 
