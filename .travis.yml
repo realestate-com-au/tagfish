@@ -1,7 +1,2 @@
-sudo: required
-
-services:
-  - docker
-
 script:
-  - auto/test
+  - bundle exec rake spec
