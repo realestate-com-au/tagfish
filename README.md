@@ -1,6 +1,5 @@
-# Tagfish 
+# Tagfish [![Build Status](https://travis-ci.org/realestate-com-au/tagfish.svg?branch=master)](https://travis-ci.org/realestate-com-au/tagfish)
 
-[![Build Status](https://travis-ci.org/realestate-com-au/tagfish.svg?branch=master)](https://travis-ci.org/realestate-com-au/tagfish)
 
 ![Tagfish logo](logo.png)
 
