@@ -1,2 +1,4 @@
+sudo: required
+
 script:
   - bundle exec rake spec
