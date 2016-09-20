@@ -21,7 +21,7 @@ module Tagfish
           URIFilters.must_not_be_tagged_latest,
           URIFilters.must_match_repository(only)
         ]
-        updater = Updater.new(filters)
+        updater = Updater.new(filters, debug?)
         original = File.read(file)
         updated = Tokeniser.dump(updater.update(Tokeniser.tokenise(original)))
 

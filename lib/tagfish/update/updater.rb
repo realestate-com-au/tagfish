@@ -5,8 +5,11 @@ require 'tagfish/docker_registry_client'
 module Tagfish
   module Update
     class Updater
-      def initialize(filters)
+      attr_reader :debug
+
+      def initialize(filters, debug = false)
         @filters = filters
+        @debug = debug
       end
 
       def update(tokens)
@@ -38,7 +41,7 @@ module Tagfish
       end
 
       def update_uri(docker_uri)
-        docker_api = DockerRegistryClient.for(docker_uri)
+        docker_api = DockerRegistryClient.for(docker_uri, debug)
         tags = docker_api.tags
         newest_tag_name = tags.latest_tags.first
         if newest_tag_name.nil?
