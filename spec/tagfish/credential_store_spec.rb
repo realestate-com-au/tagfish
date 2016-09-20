@@ -58,4 +58,29 @@ describe Tagfish::CredentialStore do
 
   end
 
+  context "with credentials saved for Docker Hub" do
+
+    let(:stored_credentials) do
+      {
+      	"auths" => {
+      		"https://index.docker.io/v1/" => {
+      			"auth" => b64_creds("UUU", "PPP")
+      		}
+        }
+      }
+    end
+
+    describe "#credentials_for" do
+
+      context "index.docker.io" do
+        it "returns the stored credentials" do
+          expected_credentials = Tagfish::RegistryCredentials.new("UUU", "PPP")
+          expect(cred_store.credentials_for("index.docker.io")).to eq(expected_credentials)
+        end
+      end
+
+    end
+
+  end
+
 end
