@@ -1,4 +1,5 @@
 require 'tagfish/registry_credentials'
+require 'base64'
 
 module Tagfish
 

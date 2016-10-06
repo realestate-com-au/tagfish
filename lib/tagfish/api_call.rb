@@ -1,4 +1,4 @@
-require 'tagfish/docker_http_auth'
+require 'tagfish/credential_store'
 require 'tagfish/api_error'
 require 'tagfish/api_response'
 
@@ -38,7 +38,15 @@ module Tagfish
     end
 
     def auth(registry)
-      @http_auth = DockerHttpAuth.for_registry(registry)
+      begin
+        file_path = '~/.docker/config.json'
+        docker_config_data = JSON.parse(File.read(File.expand_path(file_path)))
+      rescue Exception => e
+        abort("Tried to get username/password but the file #{file_path} does not exist")
+      end
+
+      cs = CredentialStore.new(docker_config_data)
+      @http_auth = cs.credentials_for(registry)
     end
 
   end
