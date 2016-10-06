@@ -5,9 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    environment:
-       - GEM_HOME=/usr/local/bundle
-       - GEM_PATH=/usr/lib/ruby/gems/2.3.0:/usr/local/bundle/gems
     volumes:
       - .:/work
       - ruby2.3-bundle-cache:/usr/local/bundle

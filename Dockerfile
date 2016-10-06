@@ -1,21 +1,17 @@
-FROM alpine:3.4
+FROM ruby:2.3-alpine@sha256:f67176f154d709747aee8ba2447bcd35403b7368d3e628466c45fa59ce69dbb1
+
 MAINTAINER Clement Labbe <clement.labbe@rea-group.com>
 
 RUN apk add --update \
-    ruby=2.3.1-r0 \
-    ruby-dev=2.3.1-r0 \
-    ruby-io-console=2.3.1-r0 \
     diffutils \
-    linux-headers \
-    build-base \
     ca-certificates && \
     rm /var/cache/apk/* && \
     rm -rf /usr/share/ri
 
-RUN echo -e 'gem: --no-rdoc --no-ri' > /etc/gemrc
-
 COPY pkg/tagfish-latest.gem /cwd/
 WORKDIR /cwd
+
+RUN echo -e 'gem: --no-rdoc --no-ri' > /etc/gemrc
 RUN gem install tagfish-latest.gem
 RUN mkdir -p /root/.docker
 
