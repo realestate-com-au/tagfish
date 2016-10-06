@@ -39,7 +39,7 @@ module Tagfish
 
     def auth(registry)
       begin
-        file_path = '~/.docker/config.json'
+        file_path = ENV.fetch('DOCKER_CONFIG', '~/.docker/config.json')
         docker_config_data = JSON.parse(File.read(File.expand_path(file_path)))
       rescue Exception => e
         abort("Tried to get username/password but the file #{file_path} does not exist")
