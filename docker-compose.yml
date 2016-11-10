@@ -8,6 +8,7 @@ services:
     volumes:
       - .:/work
       - ruby2.3-bundle-cache:/usr/local/bundle
+      - ~/.ssh:/root/.ssh
     working_dir: /work
 
 volumes:
