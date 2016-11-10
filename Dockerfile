@@ -4,6 +4,7 @@ MAINTAINER Clement Labbe <clement.labbe@rea-group.com>
 
 RUN apk add --update \
     make \
+    g++ \
     diffutils \
     ca-certificates && \
     rm /var/cache/apk/* && \
