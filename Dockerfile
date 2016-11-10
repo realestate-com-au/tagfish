@@ -1,8 +1,10 @@
-FROM ruby:2.3-alpine@sha256:f67176f154d709747aee8ba2447bcd35403b7368d3e628466c45fa59ce69dbb1
+FROM ruby:2.3.1-alpine@sha256:8d5ca285f1a24ed333aad70cfa54157f77ff130f810c91d5664e98a093d751bc
 
 MAINTAINER Clement Labbe <clement.labbe@rea-group.com>
 
 RUN apk add --update \
+    make \
+    g++ \
     diffutils \
     ca-certificates && \
     rm /var/cache/apk/* && \
