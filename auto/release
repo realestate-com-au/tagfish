@@ -2,9 +2,6 @@
 
 cd $(dirname $0)/..
 
-REPOSITORY=cowbell/tagfish
-VERSION=$(cat lib/tagfish/version.rb | grep VERSION | cut -d'"' -f2)
-
 # Ensure we have no local changes
 git diff HEAD --exit-code
 
