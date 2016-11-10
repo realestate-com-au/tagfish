@@ -3,6 +3,7 @@ FROM ruby:2.3.1-alpine@sha256:8d5ca285f1a24ed333aad70cfa54157f77ff130f810c91d566
 MAINTAINER Clement Labbe <clement.labbe@rea-group.com>
 
 RUN apk add --update \
+    make \
     diffutils \
     git \
     ca-certificates && \
