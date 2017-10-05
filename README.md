@@ -3,10 +3,9 @@
 
 ![Tagfish logo](logo.png)
 
-<div style="margin: 20px; padding: 10px; text-align: center">
-<h4>WARNING</h4>
-Tagfish has been deprecated, in favour of [dfresh](https://github.com/realestate-com-au/dfresh).
-</div>
+> ### WARNING
+> Tagfish has been deprecated, in favour of [dfresh](https://github.com/realestate-com-au/dfresh).
+
 
 Tagfish is a CLI tool to interact with Docker registries.
 
