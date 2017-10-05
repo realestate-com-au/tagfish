@@ -3,16 +3,21 @@
 
 ![Tagfish logo](logo.png)
 
-Tagfish is a CLI tool to interact with Docker registries. 
+<div style="margin: 20px; padding: 10px; text-align: center">
+<h4>WARNING</h4>
+Tagfish has been deprecated, in favour of [dfresh](https://github.com/realestate-com-au/dfresh).
+</div>
+
+Tagfish is a CLI tool to interact with Docker registries.
 
 Features include:
 
 - List all the tags of a given Docker repository
 - Return the most recent explicit tag of a repository
 - Update a file with the newest tags
-- Authenticate by reading native Docker config file 
+- Authenticate by reading native Docker config file
 - Works against hub.docker.com and private registries
-- Supports Docker Registry/Distribution API v1 and v2 
+- Supports Docker Registry/Distribution API v1 and v2
 
 To use Tagfish against a registry requiring authentication, you first need to authenticate to the given registry using `docker login <REGISTRY>`.
 
@@ -74,10 +79,10 @@ The `update` subcommand is used to update a file with the latest tags available:
 
     Usage:
         tagfish update [OPTIONS] FILE
-    
+
     Parameters:
         FILE                          file to update
-    
+
     Options:
         -d, --dry-run                 enable dry run
         --only PATTERN                Only update repositories matching pattern. Wildcards `*` may be used.
